@@ -27,6 +27,7 @@ object Site {
       Menu.i("Knockout  Example Module") / "knockout-example-mod",
       Menu.i("Knockout  Chat") / "chat-knockoutjs"
     ),
+    Menu.i("Angular Example") / "angular-example" >> TopBarGroup,
     // Menu.i("About") / "about" >> TopBarGroup,
     // Menu.i("Contact") / "contact" >> TopBarGroup,
     Menu.i("Error") / "error" >> Hidden,

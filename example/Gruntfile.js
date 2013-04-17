@@ -80,6 +80,7 @@ module.exports = function(grunt) {
           "<%= dirs.main %>/javascript/libs/bootstrap-notify.js",
           "<%= dirs.main %>/javascript/libs/knockout-2.2.1.js",
           "<%= dirs.main %>/javascript/libs/underscore-1.4.4.min.js",
+          "<%= dirs.main %>/javascript/libs/angular.min.js",
           "<%= dirs.main %>/javascript/libs/liftAjax.js",
           "<%= dirs.main %>/javascript/libs/jquery.bsAlerts.min.js",
           "<%= dirs.main %>/javascript/libs/jquery.bsFormAlerts.min.js",
