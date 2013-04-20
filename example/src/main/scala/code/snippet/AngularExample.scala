@@ -11,13 +11,16 @@ import net.liftweb.http.js.JE._
 import net.liftweb.json._
 import net.liftweb.util._
 import Helpers._
+import JsonDSL._
 
-import net.liftmodules.extras.{LiftNotice, SnippetHelper}
+import net.liftmodules.extras.{JsExtras, LiftNotice, NgModule, SnippetHelper}
 
 object AngularExample extends SnippetHelper with Loggable {
   implicit val formats = DefaultFormats
 
   def render(in: NodeSeq): NodeSeq = {
+    val ngModule = NgModule("App.views.angular.AngularExample", "angular-example")
+
     /**
       * A test function that sends a success notice back to the client.
       */
@@ -33,23 +36,20 @@ object AngularExample extends SnippetHelper with Loggable {
         val logMsg = "textInput from client: "+msg
         logger.info(logMsg)
         S.notice(logMsg)
-
-        //koModule.call("textInput", Str("")): JsCmd
-        Noop
+        ngModule.broadcast("reset-form")
+        // ngModule.apply(JsRaw("scope.textInput = ''"))
       }
     }
 
-    /**
-      * Initialize the knockout view model, passing it the anonymous functions
-      */
-    val onload: JsCmd = Call("App.views.angular.AngularExample.init", 50)
-    /*koModule.init(
-      JsExtras.AjaxCallbackAnonFunc(sendSuccess),
-      JsExtras.JsonCallbackAnonFunc(saveForm)
-    )*/
+    val params: JValue = ("x" -> 10)
+    val funcs = JsObj(
+      "sendSuccess" -> JsExtras.AjaxCallbackAnonFunc(sendSuccess),
+      "saveForm" -> JsExtras.JsonCallbackAnonFunc(saveForm)
+    )
 
-    S.appendJs(onload)
+    val onload = ngModule.init(params, funcs)
 
-    in
+    // S.appendJs(onload)
+    in ++ <tail>{Script(onload)}</tail>
   }
 }

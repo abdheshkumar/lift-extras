@@ -3,13 +3,13 @@
     <div class="span12">
       <p>This version uses AngularJS. Also,
         it uses jquery.bsAlerts.js to display notices, which is bound
-        via a snippet.
+        via a div tag. They are set to fade out after 3 seconds.
       </p>
       <hr />
-      <div data-lift="BsAlerts"></div>
+      <div data-alerts="alerts" data-fade="3000"></div>
     </div>
   </div>
-  <div data-lift="AngularExample" ng-app="AngularExample">
+  <div data-lift="AngularExample" id="angular-example" ng-app="App.views.angular.AngularExample" ng-controller="PageCtrl">
     <div class="row">
       <div class="span6">
         <p>
@@ -21,16 +21,12 @@
           Submit the form and see in the logs the data sent via ajax to the server and sent
           back to the client via a notice.
         </p>
-        <form data-bind="submit: submitForm" class="form-inline">
-          <input type="text" data-bind="value: textInput" />
+        <form ng-submit="saveForm()" class="form-inline">
+          <input type="text" ng-model="textInput" />
           <input type="submit" value="Submit" class="btn btn-primary" />
         </form>
       </div>
       <div class="span6">
-        <div ng-controller="FirstCtrl">
-          <h2>{{name}}</h2>
-          <input ng-model="thing.x"/>
-        </div>
       </div>
     </div>
     <hr />
@@ -44,7 +40,7 @@
         <p>
           This just sends a success notice back to the client.
         </p>
-        <button data-bind="click: sendSuccess" class="btn">Call server function</button>
+        <button ng-click="sendSuccess()" class="btn">Call server function</button>
       </div>
       <div class="span6"></div>
     </div>
@@ -55,10 +51,11 @@
           This demonstrates triggering the "add-alerts" event to send a warning directly to the client.
           No server calls are made.
         </p>
-        <button data-bind="click: showWarning" class="btn">Show a warning</button>
+        <button ng-click="showWarning()" class="btn">Show a warning</button>
       </div>
       <div class="span4">
       </div>
     </div>
   </div>
+  <script src="/js/angular-example.js" data-lift="tail"></script>
 </div>
