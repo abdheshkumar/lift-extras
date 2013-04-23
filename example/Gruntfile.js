@@ -44,6 +44,7 @@ module.exports = function(grunt) {
         src: [
           "<%= dirs.main %>/javascript/*.js",
           "<%= dirs.main %>/javascript/utils/**/*.js",
+          "<%= dirs.main %>/javascript/apps/**/*.js",
           "<%= dirs.main %>/javascript/views/**/*.js"
         ]
       },
@@ -88,6 +89,7 @@ module.exports = function(grunt) {
           "<%= dirs.main %>/javascript/KoAlerts.js",
           "<%= dirs.main %>/javascript/App.js",
           "<%= dirs.main %>/javascript/utils/**/*.js",
+          "<%= dirs.main %>/javascript/apps/**/*.js",
           "<%= dirs.main %>/javascript/views/**/*.js"
         ],
         dest: "<%= meta.concated %>"

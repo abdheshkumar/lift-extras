@@ -1,15 +1,15 @@
 <div data-lift="surround?with=default;at=content">
   <div class="row">
     <div class="span12">
-      <p>This version uses AngularJS. Also,
-        it uses jquery.bsAlerts.js to display notices, which is bound
+      <p>This version uses AngularJS in a similar fasion to the knockout example.</p>
+      <p>It uses jquery.bsAlerts.js to display notices, which is bound
         via a div tag. They are set to fade out after 3 seconds.
       </p>
       <hr />
       <div data-alerts="alerts" data-fade="3000"></div>
     </div>
   </div>
-  <div data-lift="AngularExample" id="angular-example" ng-app="App.views.angular.AngularExample" ng-controller="PageCtrl">
+  <div data-lift="AngularExample" id="angular-example" ng-app="views.angular.AngularExample" ng-controller="PageCtrl">
     <div class="row">
       <div class="span6">
         <p>
@@ -57,5 +57,4 @@
       </div>
     </div>
   </div>
-  <script src="/js/angular-example.js" data-lift="tail"></script>
 </div>
