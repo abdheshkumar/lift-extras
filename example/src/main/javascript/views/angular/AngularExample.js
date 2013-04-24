@@ -2,7 +2,7 @@
   "use strict";
 
   angular.module('views.angular.AngularExample', ['views.angular.AngularExampleServer'])
-    .controller('PageCtrl', function($scope, ServerFuncs) {
+    .controller('PageCtrl', ['$scope', 'ServerFuncs', function($scope, ServerFuncs) {
       $scope.textInput = "";
       $scope.sendSuccess = ServerFuncs.sendSuccess;
 
@@ -25,6 +25,6 @@
         });
       });
 
-    });
+    }]);
 
 })(this, angular);

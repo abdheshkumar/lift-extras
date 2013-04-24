@@ -19,7 +19,8 @@ object AngAppDemo extends SnippetHelper with Loggable {
   implicit val formats = DefaultFormats
 
   def render(in: NodeSeq): NodeSeq = {
-    val ngModule = NgModule("AngDemo", "angular-demo")
+    val ngModule = NgModule("AngDemoServer")
+    val ngController = NgController("angular-demo")
 
     /**
       * A test function that sends a success notice back to the client.
@@ -36,8 +37,8 @@ object AngAppDemo extends SnippetHelper with Loggable {
         val logMsg = "textInput from client: "+msg
         logger.info(logMsg)
         S.notice(logMsg)
-        ngModule.broadcast("reset-form")
-        // ngModule.apply(JsRaw("scope.textInput = ''"))
+        ngController.broadcast("reset-form")
+        // ngController.apply(JsRaw("scope.textInput = ''"))
       }
     }
 
@@ -52,5 +53,24 @@ object AngAppDemo extends SnippetHelper with Loggable {
     S.appendGlobalJs(JsExtras.IIFE(onload))
 
     in
+  }
+
+  def success(in: NodeSeq): NodeSeq = {
+    val ngController = NgController("ang-demo-success")
+
+    /**
+      * A test function that sends a success notice back to the client.
+      */
+    def sendSuccess(): JsCmd = LiftNotice.success("You have success").asJsCmd
+
+    val onload = JsExtras.IIFE(SetExp(
+      JsVar("window.serverFuncs.sendSuccess"),
+      JsExtras.AjaxCallbackAnonFunc(sendSuccess)
+    ))
+
+    // val onload = JsExtras.IIFE(JsRaw("scope.sendSuccess = %s".format(.toJsCmd))))
+    // S.appendGlobalJs(onload)
+
+    <div>{in ++ Script(onload)}</div>
   }
 }

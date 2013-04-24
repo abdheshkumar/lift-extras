@@ -14,7 +14,7 @@ import JsExtras.IIFE
 /**
   * An AngularJs module
   */
-case class NgModule(name: String, elementId: String) {
+case class NgModule(name: String) {
 
   /**
     * Creates a module with two services:
@@ -23,7 +23,7 @@ case class NgModule(name: String, elementId: String) {
     */
   def init(params: JValue, funcs: JsObj): JsCmd = {
     JsRaw(
-     """|angular.module('%sServer', [])
+     """|angular.module('%s', [])
         |  .factory('ServerParams', function() {
         |    return %s;
         |  })
@@ -32,7 +32,9 @@ case class NgModule(name: String, elementId: String) {
         |  });""".format(name, compact(render(params)), funcs.toJsCmd).stripMargin
     )
   }
+}
 
+case class NgController(elementId: String) {
   private implicit def boxedJValueToJsExp(in: Box[JValue]): JsExp = in.map(jv => new JsExp {
     def toJsCmd = compact(render(jv))
   }).openOr(JsNull)
@@ -45,7 +47,7 @@ case class NgModule(name: String, elementId: String) {
 
   private def WithScope(cmd: JsCmd): JsCmd =
     IIFE(
-      JsCrVar("scope", Call("angular.element(document.getElementById('%s')).scope".format(elementId))) &
+      JsCrVar("scope", Call("angular.element('#%s').scope".format(elementId))) &
       cmd
     )
 }

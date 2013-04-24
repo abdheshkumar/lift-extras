@@ -19,7 +19,8 @@ object AngularExample extends SnippetHelper with Loggable {
   implicit val formats = DefaultFormats
 
   def render(in: NodeSeq): NodeSeq = {
-    val ngMod = NgModule("views.angular.AngularExample", "angular-example")
+    val ngMod = NgModule("views.angular.AngularExampleServer")
+    val ngController = NgController("angular-example")
 
     /**
       * A test function that sends a success notice back to the client.
@@ -36,8 +37,8 @@ object AngularExample extends SnippetHelper with Loggable {
         val logMsg = "textInput from client: "+msg
         logger.info(logMsg)
         S.notice(logMsg)
-        ngMod.broadcast("reset-form")
-        // ngMod.apply(JsRaw("scope.textInput = ''"))
+        ngController.broadcast("reset-form")
+        // ngController.apply(JsRaw("scope.textInput = ''"))
       }
     }
 

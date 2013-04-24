@@ -30,6 +30,12 @@ object BuildSettings {
     Process(Seq("grunt", "compress"), dir) !
   }
 
+  // call grunt test
+  val gruntTest = TaskKey[Int]("grunt-test", "Call the grunt test command")
+  def gruntTestTask = (baseDirectory in Compile) map { dir =>
+    Process(Seq("grunt", "test"), dir) !
+  }
+
   val basicSettings = Defaults.defaultSettings ++ Seq(
     name := "extras",
     organization := "net.liftmodules",
@@ -103,11 +109,13 @@ object BuildSettings {
       gruntInit <<= gruntInitTask,
       gruntCompile <<= gruntCompileTask,
       gruntCompress <<= gruntCompressTask,
+      gruntTest <<= gruntTestTask,
 
       // dependencies
       compile <<= (compile in Compile) dependsOn gruntCompile,
       // (start in container.Configuration) <<= (start in container.Configuration) dependsOn gruntCompile,
       Keys.`package` <<= (Keys.`package` in Compile) dependsOn gruntCompress,
+      test <<= (test in Test) dependsOn gruntTest,
 
       // add directory where grunt publishes to, to the webapp
       (webappResources in Compile) <+= (baseDirectory) { _ / "grunt-build" / "out" },

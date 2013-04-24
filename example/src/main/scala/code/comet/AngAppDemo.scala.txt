@@ -24,7 +24,8 @@ class AngAppDemo extends CometActor with SnippetHelper {
 
   implicit val formats = DefaultFormats
 
-  private val ngModule = NgModule("AngDemo", "angular-demo")
+  private val ngModule = NgModule("AngDemo")
+  private val ngController = NgModule("angular-demo")
 
   override def lowPriority = {
     case ServerEvent(id, json) =>  partialUpdate(ngModule.broadcast(id, Full(json)))
@@ -37,8 +38,7 @@ class AngAppDemo extends CometActor with SnippetHelper {
       } yield {
         val logMsg = "textInput from client: "+msg
         S.notice(logMsg)
-        ngModule.broadcast("reset-form")
-        // ngModule.apply(JsRaw("scope.textInput = ''"))
+        ngController.broadcast("reset-form")
       }
     }
 
