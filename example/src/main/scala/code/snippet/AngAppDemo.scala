@@ -14,13 +14,13 @@ import Helpers._
 import JsonDSL._
 
 import net.liftmodules.extras._
+import NgJsCmds._
 
 object AngAppDemo extends SnippetHelper with Loggable {
   implicit val formats = DefaultFormats
 
   def render(in: NodeSeq): NodeSeq = {
-    val ngModule = NgModule("AngDemoServer")
-    val ngController = NgController("angular-demo")
+    val elementId = "angular-demo"
 
     /**
       * A test function that sends a success notice back to the client.
@@ -37,8 +37,8 @@ object AngAppDemo extends SnippetHelper with Loggable {
         val logMsg = "textInput from client: "+msg
         logger.info(logMsg)
         S.notice(logMsg)
-        ngController.broadcast("reset-form")
-        // ngController.apply(JsRaw("scope.textInput = ''"))
+        NgBroadcast(elementId, "reset-form")
+        // NgApply(elementId, JsRaw("scope.textInput = ''"))
       }
     }
 
@@ -48,7 +48,7 @@ object AngAppDemo extends SnippetHelper with Loggable {
       "saveForm" -> JsExtras.JsonCallbackAnonFunc(saveForm)
     )
 
-    val onload = ngModule.init(params, funcs)
+    val onload = NgServerModule("AngDemoServer", params, funcs)
 
     S.appendGlobalJs(JsExtras.IIFE(onload))
 
@@ -56,7 +56,6 @@ object AngAppDemo extends SnippetHelper with Loggable {
   }
 
   def success(in: NodeSeq): NodeSeq = {
-    val ngController = NgController("ang-demo-success")
 
     /**
       * A test function that sends a success notice back to the client.

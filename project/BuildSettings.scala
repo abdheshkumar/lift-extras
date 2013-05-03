@@ -43,7 +43,7 @@ object BuildSettings {
     liftVersion <<= liftVersion ?? "2.5-RC4",
     liftEdition <<= liftVersion apply { _.substring(0,3) },
     name <<= (name, liftEdition) { (n, e) =>  n + "_" + e },
-    scalaVersion := "2.9.2",
+    scalaVersion := "2.10.0",
     crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1", "2.10.0"),
     scalacOptions <<= scalaVersion map { sv: String =>
       if (sv.startsWith("2.10."))
