@@ -34,14 +34,14 @@ object NgJsCmds {
   }
 
   /**
-    * Call $scope.$apply on the passed elementId
+    * Call `&#36;scope.&#36;apply` on the passed elementId
     */
   case class NgApply(elementId: String, cmd: JsCmd) extends JsCmd {
     def toJsCmd = WithScopeVar(elementId, Call("scope.$apply", AnonFunc(cmd))).toJsCmd
   }
 
   /**
-    * Call $scope.$broadcast on the passed elementId
+    * Call `&#36;scope.&#36;broadcast` on the passed elementId
     */
   case class NgBroadcast(elementId: String, event: String, json: Box[JValue] = Empty) extends JsCmd {
     def toJsCmd = WithScopeVar(elementId, Call("scope.$broadcast", event, json)).toJsCmd
